@@ -26,18 +26,16 @@ class _PriceScreenState extends State<PriceScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-                flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('images/coin.png', width: 100),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Coin Tracker',
-                      style: TextStyle(fontSize: 28),
-                    ),
-                  ],
-                )),
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('images/coin.png', width: 100),
+                  const SizedBox(height: 16),
+                  const Text('Coin Tracker', style: TextStyle(fontSize: 28)),
+                ],
+              ),
+            ),
             Expanded(
               flex: 6,
               child: ListView.separated(
@@ -59,7 +57,7 @@ class _PriceScreenState extends State<PriceScreen> {
                               style: const TextStyle(color: Colors.white24),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     trailing: Column(
@@ -67,8 +65,9 @@ class _PriceScreenState extends State<PriceScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          NumberFormat("#,###.0")
-                              .format(coinsList[index].price),
+                          NumberFormat(
+                            "#,###.0",
+                          ).format(coinsList[index].price),
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
@@ -85,8 +84,30 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
             Container(
-              color: Colors.grey,
               height: 150,
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white24),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                ),
+                child: DropdownButton<String>(
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  isExpanded: true,
+                  value: selectedCurrency,
+                  items: [
+                    DropdownMenuItem(child: Text('USD'), value: 'USD'),
+                    DropdownMenuItem(child: Text('EUR'), value: 'EUR'),
+                    DropdownMenuItem(child: Text('GBP'), value: 'GBP'),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCurrency = value!;
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),
