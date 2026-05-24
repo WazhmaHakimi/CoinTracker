@@ -1,4 +1,5 @@
 // import 'package:coin/models/coin_model.dart';
+import 'package:coin_tracker_project/utilities/coin_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'models/coin_model.dart';
@@ -16,6 +17,15 @@ class _PriceScreenState extends State<PriceScreen> {
     CoinModel(icon: 'eth', name: 'Ethereum', price: 1200),
     CoinModel(icon: 'ltc', name: 'Litecoin', price: 62.5),
   ];
+
+  List<DropdownMenuItem<String>> getDropdownMenuItems() {
+    List<DropdownMenuItem<String>> dropDownItems = [];
+    for (String currency in currenciesList) {
+      var newItem = DropdownMenuItem(child: Text(currency), value: currency);
+      dropDownItems.add(newItem);
+    }
+    return dropDownItems;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +106,7 @@ class _PriceScreenState extends State<PriceScreen> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   isExpanded: true,
                   value: selectedCurrency,
-                  items: [
-                    DropdownMenuItem(child: Text('USD'), value: 'USD'),
-                    DropdownMenuItem(child: Text('EUR'), value: 'EUR'),
-                    DropdownMenuItem(child: Text('GBP'), value: 'GBP'),
-                  ],
+                  items: getDropdownMenuItems(),
                   onChanged: (value) {
                     setState(() {
                       selectedCurrency = value!;
