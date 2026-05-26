@@ -1,5 +1,6 @@
 // import 'package:coin/models/coin_model.dart';
 import 'package:coin_tracker_project/utilities/coin_data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'models/coin_model.dart';
@@ -21,10 +22,19 @@ class _PriceScreenState extends State<PriceScreen> {
   List<DropdownMenuItem<String>> getDropdownMenuItems() {
     List<DropdownMenuItem<String>> dropDownItems = [];
     for (String currency in currenciesList) {
-      var newItem = DropdownMenuItem(child: Text(currency), value: currency);
+      var newItem = DropdownMenuItem(value: currency, child: Text(currency));
       dropDownItems.add(newItem);
     }
     return dropDownItems;
+  }
+
+  List<Text> getPickerItems() {
+    List<Text> pickerItems = [];
+    for (String currncy in currenciesList) {
+      pickerItems.add(Text(currncy));
+    }
+
+    return pickerItems;
   }
 
   @override
@@ -95,24 +105,12 @@ class _PriceScreenState extends State<PriceScreen> {
             ),
             Container(
               height: 150,
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white24),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                ),
-                child: DropdownButton<String>(
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  isExpanded: true,
-                  value: selectedCurrency,
-                  items: getDropdownMenuItems(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCurrency = value!;
-                    });
-                  },
-                ),
+              child: CupertinoPicker(
+                itemExtent: 32,
+                onSelectedItemChanged: (selectedIndex) {
+                  print(selectedIndex);
+                },
+                children: getPickerItems(),
               ),
             ),
           ],
@@ -121,3 +119,23 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 }
+
+// InputDecorator(
+//                 decoration: InputDecoration(
+//                   enabledBorder: OutlineInputBorder(
+//                     borderSide: BorderSide(color: Colors.white24),
+//                   ),
+//                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
+//                 ),
+//                 child: DropdownButton<String>(
+//                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+//                   isExpanded: true,
+//                   value: selectedCurrency,
+//                   items: getDropdownMenuItems(),
+//                   onChanged: (value) {
+//                     setState(() {
+//                       selectedCurrency = value!;
+//                     });
+//                   },
+//                 ),
+//               ),
